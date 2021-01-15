@@ -17,9 +17,9 @@ public class Lecteur_Fichier {
 		try {
 			BufferedReader read = new BufferedReader(new FileReader(path));
 			try {
-				int c = 0;
-				while((c = read.read()) != -1) {
-					System.out.println("On lit =>"+c);
+				String str;
+				while((str = read.readLine()) != null) {
+					System.out.println(""+ str);
 				}
 				read.close();
 			} catch (IOException e) {
