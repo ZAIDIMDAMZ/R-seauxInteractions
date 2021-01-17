@@ -3,7 +3,7 @@ package gri2021.tp1;
 public class Graph {
 	private static int NULL = -1;//indique qu'un élément est non-initialisé
 	int nbS, nbA;//nb sommets et arrêtes
-	int[] sommets;
+	//int[] sommets;
 	int[] ls_adja[];
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
 	
@@ -14,6 +14,15 @@ public class Graph {
 			j++;
 		}
 		return j;
+	}
+	
+	//retourne la liste des voisins d'un sommet donné
+	public int[] get_neighbors(int u) {
+		int[] ls = new int[neighbors(u)];
+		for(int i=0;i<neighbors(u);i++) {
+			ls[i] = ls_adja[u][i];
+		}
+		return ls;
 	}
 	
 	private void stock_adja(Lecteur_Fichier read) {
@@ -31,11 +40,11 @@ public class Graph {
 	public Graph(Lecteur_Fichier read) {
 		this.nbS = read.nbr_sommets();
 		this.nbA = read.nbr_arretes();
-		sommets = new int[nbS];
+		//sommets = new int[nbS];
 		ls_adja = new int[nbS][];
 		//On initialise les tableaux
 		for(int i = 0;i<nbS;i++) {
-			sommets[i] = i;
+			//sommets[i] = i;
 			ls_adja[i] = new int[nbS];
 			//Initialisation edjasences
 			for(int j = 0;j<nbS;j++) {
@@ -55,6 +64,11 @@ public class Graph {
 	
 	public int get_degMax() {
 		return degMax;
+	}
+	
+	public int get_d_entre(int x, int y) {
+		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+		return pl.Breadth_First_Search(this, x, y);
 	}
 	
 }

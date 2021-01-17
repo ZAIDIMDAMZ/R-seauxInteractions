@@ -53,9 +53,12 @@ public class Lecteur_Fichier {
 		}
 		if(Is_ok) {
 			//On extrait les chifres.
+			//Tabulation = "\t"
+			ligne = ligne.replace("\t", " ");//Il y a des fois où les sommets sont séparés par une tabulation et non un espace
+			//System.out.println("actu = "+ligne.substring(0, ligne.indexOf(" ")));
 			int d = Integer.parseInt(ligne.substring(0, ligne.indexOf(" ")));
 			//System.out.println(""+ligne.substring(ligne.indexOf(" ")+1));
-			int a = Integer.parseInt(ligne.substring(ligne.indexOf(" ")+1));
+			int a = Integer.parseInt(ligne.substring(ligne.lastIndexOf(" ")+1));
 			//System.out.println("arrête: Départ = "+d+", arrivé = "+a);
 			data_d[i] = d;
 			data_a[i] = a;
