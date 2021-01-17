@@ -16,6 +16,12 @@ public class TP1 {
 		System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
 		//
 		Graph g = new Graph(Reader);
+		System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
+		
+		//Sorite attendue:
+		System.out.println("n="+g.get_nbS());
+		System.out.println("m="+g.get_nbA());
+		System.out.println("degmax="+g.get_degMax());
 	}
 
 }

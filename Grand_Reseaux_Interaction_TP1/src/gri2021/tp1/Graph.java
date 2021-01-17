@@ -45,6 +45,14 @@ public class Graph {
 		stock_adja(read);
 	}
 	
+	public int get_nbS() {
+		return nbS;
+	}
+	
+	public int get_nbA() {
+		return nbA;
+	}
+	
 	public int get_degMax() {
 		return degMax;
 	}
