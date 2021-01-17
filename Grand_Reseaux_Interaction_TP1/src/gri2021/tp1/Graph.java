@@ -18,11 +18,14 @@ public class Graph {
 	
 	//retourne la liste des voisins d'un sommet donné
 	public int[] get_neighbors(int u) {
-		int[] ls = new int[neighbors(u)];
-		for(int i=0;i<neighbors(u);i++) {
-			ls[i] = ls_adja[u][i];
+		if(ls_adja[u] != null) {
+			int[] ls = new int[ls_adja[u].length];
+			for(int i=0;i<ls.length;i++) {
+				ls[i] = ls_adja[u][i];
+			}
+			return ls;
 		}
-		return ls;
+		return null;
 	}
 	
 	private void stock_adja(Lecteur_Fichier read) {
@@ -45,10 +48,14 @@ public class Graph {
 		//On initialise les tableaux
 		for(int i = 0;i<nbS;i++) {
 			//sommets[i] = i;
-			ls_adja[i] = new int[nbS];
-			//Initialisation edjasences
-			for(int j = 0;j<nbS;j++) {
-				ls_adja[i][j] = NULL;
+			System.out.println("ini tableau i = "+i);
+			if(read.get_neighborsX(i) != 0) {
+				ls_adja[i] = new int[read.get_neighborsX(i)];
+				//System.out.println("Le sommet "+0+" a "+read.get_neighborsX(0)+" voisins");
+				//Initialisation edjasences
+				for(int j = 0;j<ls_adja[i].length;j++) {
+					ls_adja[i][j] = NULL;
+				}
 			}
 		}
 		stock_adja(read);

@@ -7,6 +7,7 @@ import java.io.IOException;
 
 //Va ouvrir les fichier
 public class Lecteur_Fichier {
+	private static int NULL = -1;//Pour éviter qu'il y ait confusion entre les data non initialisé et 0
 	String path;
 	//Stockera les arrêtes qui serons lues dans le document
 	int [] data_d;//Les points de départ des arrêtes
@@ -20,6 +21,10 @@ public class Lecteur_Fichier {
 		//Le nombre d'arrête donné n'est qu'une estimation, par sécurité on rajoute 3 de cette estimation pour définir la taille du tableau data
 		int secu = (int) (estima + (estima * 0.03));
 		data_d = new int[secu];
+		//Initialisatin à null
+		for(int i=0;i<secu;i++) {
+			data_d[i] = NULL;
+		}
 		data_a = new int[secu];
 	}
 	
@@ -96,5 +101,25 @@ public class Lecteur_Fichier {
 		} catch (FileNotFoundException e) {
 			System.err.println(e);
 		}
+	}
+	
+	//Va indiquer combiens de voisins possède le sommet passé en paramètre
+	public int get_neighborsX(int x) {
+		int v=0;//Indique le nombre de voisins
+		for(int i=0;i<data_d.length;i++) {
+			if(data_d[i] == x) {
+				v++;
+			}
+		}
+		return v;
+	}
+	
+	//Fonction de debugage
+	public void print_data_d(){
+		System.out.print("data_d = ");
+		for(int i=0;i<data_d.length;i++) {
+			System.out.println(""+data_d[i]+" ");
+		}
+		System.out.println();
 	}
 }

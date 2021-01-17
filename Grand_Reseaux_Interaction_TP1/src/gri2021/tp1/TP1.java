@@ -17,6 +17,7 @@ public class TP1 {
 		System.out.println("Lecture terminée:");
 		System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
 		//
+		System.out.println("Création du Graph:");
 		Graph g = new Graph(Reader);
 		System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
 		
@@ -25,7 +26,7 @@ public class TP1 {
 		if(x < 0 || y < 0) {
 			throw new Exception("L'un des 2 sommets à donné en argument est erroné");
 		}
-		
+		//Reader.print_data_d();//debug
 		//Sorite attendue:
 		System.out.println("n="+g.get_nbS());
 		System.out.println("m="+g.get_nbA());

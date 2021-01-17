@@ -22,11 +22,19 @@ public class Parcour_Largeur {
 	private void Parcour(Graph g, int x) {
 		file.remove(x);
 		int[] ls_v = g.get_neighbors(x);
-		for(int i=0;i<ls_v.length;i++) {//Pour tout les voisins de x
-			if(!deja_vu[ls_v[i]]) {//Si le voisin n'a pas déjà été visité
-				file.push(ls_v[i]);//On l'ajoute à la file
-				deja_vu[ls_v[i]] = true;//On le marque
-				dist[ls_v[i]] = dist[x] + 1; //On indique qu'il est éloigne de x par une distance de 1
+		if(ls_v != null) {
+			/*System.out.println("ls_v de "+x+" = ");
+			for(int i=0;i<ls_v.length;i++) {
+				System.out.print(""+ls_v[i]+" ");
+			}
+			System.out.println();*/
+			for(int i=0;i<ls_v.length;i++) {//Pour tout les voisins de x
+				//System.out.println("i = "+i+", ls_v de taille = "+ls_v.length + "ls_v[i] = " + ls_v[i]);
+				if(!deja_vu[ls_v[i]]) {//Si le voisin n'a pas déjà été visité
+					file.push(ls_v[i]);//On l'ajoute à la file
+					deja_vu[ls_v[i]] = true;//On le marque
+					dist[ls_v[i]] = dist[x] + 1; //On indique qu'il est éloigne de x par une distance de 1
+				}
 			}
 		}
 	}
