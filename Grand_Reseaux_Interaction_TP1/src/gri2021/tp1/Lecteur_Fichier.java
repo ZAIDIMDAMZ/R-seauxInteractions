@@ -19,7 +19,7 @@ public class Lecteur_Fichier {
 	public Lecteur_Fichier(String path, int estima) {
 		this.path = path;
 		//Le nombre d'arrête donné n'est qu'une estimation, par sécurité on rajoute 3 de cette estimation pour définir la taille du tableau data
-		int secu = (int) (estima + (estima * 0.01));
+		int secu = (int) (estima +  100);
 		data_d = new int[secu];
 		//Initialisatin à null
 		for(int i=0;i<secu;i++) {
@@ -38,12 +38,20 @@ public class Lecteur_Fichier {
 		return nb_arrete;
 	}
 	
-	public int get_depart_at(int i) {
+	/*public int get_depart_at(int i) {
 		return data_d[i];
 	}
 	
 	public int get_arive_at(int i) {
 		return data_a[i];
+	}*/
+	
+	public int[] get_ori() {
+		return data_d;
+	}
+	
+	public int[] get_extremi() {
+		return data_a;
 	}
 	
 	//Extrait les information intéressantes des la lignes
@@ -103,6 +111,7 @@ public class Lecteur_Fichier {
 		}
 	}
 	
+	/*
 	//Va indiquer combiens de voisins possède le sommet passé en paramètre
 	public int get_neighborsX(int x) {
 		int v=0;//Indique le nombre de voisins
@@ -112,7 +121,7 @@ public class Lecteur_Fichier {
 			}
 		}
 		return v;
-	}
+	}*/
 	
 	//Fonction de debugage
 	public void print_data_d(){

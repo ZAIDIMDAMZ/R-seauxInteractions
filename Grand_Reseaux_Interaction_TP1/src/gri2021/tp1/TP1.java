@@ -23,15 +23,14 @@ public class TP1 {
 			throw new Exception("Le paramètre 'estimation du nombre d'arcrs' est erroné");
 		}
 		Lecteur_Fichier Reader = new Lecteur_Fichier(args[0], Integer.parseInt(args[1]));
-		System.out.println("Lecture du graph en cours:");
+		//System.out.println("Lecture du graph en cours:");
 		Reader.Read();
-		System.out.println("Lecture terminée:");
+		//System.out.println("Lecture terminée:");
 		mem();
 		System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
 		//
 		System.out.println("Création du Graph:");
 		Graph g = new Graph(Reader);
-		mem();
 		System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
 		
 		int x = Integer.parseInt(args[2]);//Un premier sommet
