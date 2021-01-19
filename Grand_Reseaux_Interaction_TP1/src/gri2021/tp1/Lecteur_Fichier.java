@@ -19,7 +19,7 @@ public class Lecteur_Fichier {
 	public Lecteur_Fichier(String path, int estima) {
 		this.path = path;
 		//Le nombre d'arrête donné n'est qu'une estimation, par sécurité on rajoute 3 de cette estimation pour définir la taille du tableau data
-		int secu = (int) (estima + (estima * 0.03));
+		int secu = (int) (estima + (estima * 0.01));
 		data_d = new int[secu];
 		//Initialisatin à null
 		for(int i=0;i<secu;i++) {

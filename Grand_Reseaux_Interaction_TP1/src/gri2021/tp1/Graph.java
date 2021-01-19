@@ -3,15 +3,16 @@ package gri2021.tp1;
 public class Graph {
 	private static int NULL = -1;//indique qu'un élément est non-initialisé
 	int nbS, nbA;//nb sommets et arrêtes
-	//int[] sommets;
+	//int[] sommets;//Tout les sommets ne vont pas forcément de 0 à (nbs-1)
 	int[] ls_adja[];
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
 	
 	//Renvoie le nombre de voisin d'un sommet donné??
 	public int neighbors(int u) {
 		int j = 0;
-		while(ls_adja[u][j] != NULL) {
-			j++;
+		//System.out.println("u = "+u+" et j = "+j);
+		while((ls_adja[u][j] != NULL) && (j < nbS)) {
+				j++;
 		}
 		return j;
 	}
@@ -30,12 +31,14 @@ public class Graph {
 	
 	private void stock_adja(Lecteur_Fichier read) {
 		for(int i = 0;i<nbA;i++) {
-			//On stock le nouvel adjasent
-			int j = neighbors(read.get_depart_at(i));
-			ls_adja[read.get_depart_at(i)][j] = read.get_arive_at(i);
-			//On vérivie si cela ne marque pas le nouveau degré maxiaml attenit
-			if((j+1) > degMax) {
-				degMax = (j+1);
+			if(read.get_depart_at(i) != -1) {//On vérifie si le sommet "i" n'est pas dans le graph car il n'y a pas forcément tt les sommets de 0 à (nbS - 1)
+				//On stock le nouvel adjasent
+				int j = neighbors(read.get_depart_at(i));
+				ls_adja[read.get_depart_at(i)][j] = read.get_arive_at(i);
+				//On vérivie si cela ne marque pas le nouveau degré maxiaml attenit
+				if((j+1) > degMax) {
+					degMax = (j+1);
+				}
 			}
 		}
 	}
@@ -48,7 +51,7 @@ public class Graph {
 		//On initialise les tableaux
 		for(int i = 0;i<nbS;i++) {
 			//sommets[i] = i;
-			System.out.println("ini tableau i = "+i);
+			//System.out.println("ini tableau i = "+i);
 			if(read.get_neighborsX(i) != 0) {
 				ls_adja[i] = new int[read.get_neighborsX(i)];
 				//System.out.println("Le sommet "+0+" a "+read.get_neighborsX(0)+" voisins");
