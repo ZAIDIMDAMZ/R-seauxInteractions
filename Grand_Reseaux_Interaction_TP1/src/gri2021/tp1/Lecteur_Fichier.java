@@ -60,7 +60,7 @@ public class Lecteur_Fichier {
 		//Si le premier caractère de la ligne est un #, c'est que la ligne est un commentaire à ignorer
 		if(Character.compare(ligne.charAt(0), '#') == 0) {
 			Is_ok = false;
-			System.out.println("Commentaire");
+			//System.out.println("Commentaire");
 		}else {
 			Is_ok = true;
 		}

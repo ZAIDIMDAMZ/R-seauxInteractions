@@ -16,7 +16,7 @@ public class TP1 {
 	//Autre ex cf enonce "ca-AstroPh.txt 400000 127393 57507" [doit renvoyer: n=133280 m=396160 degmax=1008 dist=4] et [4Mb puis 10Mb]
 	////Autre ex cf enonce "ca-AstroPh.txt 400000 127393 1" [doit renvoyer: n=133280 m=396160 degmax=1008 dist=2147483647] et [4Mb puis 10Mb]
 	public static void main(String[] args) throws Exception {
-		System.out.println("arg0 = "+args[0]);
+		//System.out.println("arg0 = "+args[0]);
 		//Le fichier doit être lu avant de construire le graph
 		int estim = Integer.parseInt(args[1]);//Une estimation du nbr d'arcs
 		if(estim <= 0) {
@@ -27,11 +27,10 @@ public class TP1 {
 		Reader.Read();
 		//System.out.println("Lecture terminée:");
 		mem();
-		System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
-		//
-		System.out.println("Création du Graph:");
+		//System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
+		//System.out.println("Création du Graph:");
 		Graph g = new Graph(Reader);
-		System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
+		//System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
 		
 		int x = Integer.parseInt(args[2]);//Un premier sommet
 		int y = Integer.parseInt(args[3]);//Un second sommet
