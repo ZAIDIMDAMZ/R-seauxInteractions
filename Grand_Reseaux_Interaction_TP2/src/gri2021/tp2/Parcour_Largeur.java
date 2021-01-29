@@ -39,6 +39,7 @@ public class Parcour_Largeur {
 		}
 	}
 	
+	//TODO: est strop spécifiq à arrivé et départ, faire un BFS qui ne fasse qu'un seul parcours puis retourne le dernier pts visité avec la d la plus élevée
 	public int  Breadth_First_Search(Graph g, int ori, int obj) {
 		dist[ori] = 0;//L'origine est située à une distance 0 d'elle même
 		file.push(ori);

@@ -4,7 +4,7 @@ public class Graph {
 	private static int NULL = -1;//indique qu'un élément est non-initialisé
 	int nbS, nbA;//nb sommets et arrêtes
 	//int[] sommets;//Tout les sommets ne vont pas forcément de 0 à (nbs-1)
-	int[] ls_adja[];
+	int[] ls_adja[];//TODO: voir la correction, cette représentation de l'adjascence est sûrement fausse
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
 	
 	//Renvoie le nombre de voisin d'un sommet donné??
@@ -32,6 +32,7 @@ public class Graph {
 		return null;
 	}
 	
+	//TODO: à corriger, on ne peut parcourir les sommets que dans un sens et pas l'autre!
 	private void stock_adja(int[] origines, int[] extremites) {
 		for(int i = 0;i<nbA;i++) {
 			if(origines[i] != -1 && (ls_adja[origines[i]] != null)) {//On vérifie si le sommet "i" n'est pas dans le graph car il n'y a pas forcément tt les sommets de 0 à (nbS - 1)
@@ -39,6 +40,8 @@ public class Graph {
 				int j = neighbors(origines[i]);
 				//System.out.println("j = "+j);
 				ls_adja[origines[i]][j] = extremites[i];
+				//!!! on peut traverser le graph ds les 2 sens!!!
+				//ls_adja[origines[i]][extremites[i]] = j;
 				//On vérivie si cela ne marque pas le nouveau degré maxiaml attenit
 				if((j+1) > degMax) {
 					degMax = (j+1);
@@ -108,6 +111,7 @@ public class Graph {
 		int dmax = 0;//la distance maximal trouvée entre 2 voisins
 		int v = u;//Le sommet le plus éloigné, si un sommet est isolé il se renvera lui-même
 		int d;//distance observée
+		//TODO: Pas bon méthodologie quadratic trop lourde, revoir le "Parcour_Largeur" directement
 		for(int i=0;i<nbS;i++) {
 			if(i != u) {
 				d = get_d_entre(u, i);
