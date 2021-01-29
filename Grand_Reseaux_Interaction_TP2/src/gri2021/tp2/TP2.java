@@ -10,6 +10,15 @@ public class TP2 {
 				+ " Mb");
 		System.err.flush();
 	}
+	
+	//Fonction de debuggage: affiche la liste des voisins
+	public static void print_voisins(int x, Graph g) {
+		int [] lsV = g.get_neighbors(x);
+		System.out.print("Voisins de "+x+": ");
+		for(int i = 0;i<lsV.length;i++) {
+			System.out.print(""+lsV[i]+" ");
+		}
+	}
 
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
@@ -22,32 +31,28 @@ public class TP2 {
 		}
 		System.out.println("action = "+action+", fichier = "+fichier +", arg1 = "+estim+" et on part du point "+u);
 		if(action.compareTo("2-sweep") == 0) {
-		Lecteur_Fichier Reader = new Lecteur_Fichier(fichier, estim);
+			Lecteur_Fichier Reader = new Lecteur_Fichier(fichier, estim);
 			//System.out.println("Lecture du graph en cours:");
 			Reader.Read();
 			//System.out.println("Lecture terminée:");
 			mem();
+			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
+			Graph g = new Graph(Reader);
+			//System.out.println("n = "+g.get_nbS()+", m = "+g.get_nbA()+", degMax = "+g.get_degMax());
+			//print_voisins(u,g);
+			int v = g.get_plus_eloigne(u);
+			//TODO: a tester plus tard, 1 chose à la fois
+			int w = g.get_plus_eloigne(v);
+			int diam = g.get_d_entre(v, w);
+			System.out.println("v="+v);
+			System.out.println("w="+w);
+			System.out.println("diam>="+diam);
+		}else if(action.compareTo("4-sweep") == 0) {
+			//TODO les else autres actions
+		}else {
+			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}
-		//System.out.println("Il y a "+Reader.nbr_sommets()+" sommets sur ce graph");
-		//System.out.println("Création du Graph:");
-		/*
-		Graph g = new Graph(Reader);
-		//System.out.println("Le degré maximal d'un sommet est de: "+g.get_degMax());
-		
-		int x = Integer.parseInt(args[2]);//Un premier sommet
-		int y = Integer.parseInt(args[3]);//Un second sommet
-		if(x < 0 || y < 0) {
-			throw new Exception("L'un des 2 sommets à donné en argument est erroné");
-		}
-		//Reader.print_data_d();//debug
-		//Sorite attendue:
-		System.out.println("n="+g.get_nbS());
-		System.out.println("m="+g.get_nbA());
-		System.out.println("degmax="+g.get_degMax());
-		//TODO l'allocation de mémoire
-		System.out.println("dist="+g.get_d_entre(x, y));//Note: je ne suis pas sûr de si correcte pour cas avec dist > 1 mais je manue d'exemple simple pour débuger
-		mem();
-		*/
+		//FINI
 	}
 
 }
