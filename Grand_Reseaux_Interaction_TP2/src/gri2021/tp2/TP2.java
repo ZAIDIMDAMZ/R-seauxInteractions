@@ -43,10 +43,11 @@ public class TP2 {
 			int v = g.get_plus_eloigne(u);
 			//TODO: a tester plus tard, 1 chose à la fois
 			int w = g.get_plus_eloigne(v);
-			int diam = g.get_d_entre(v, w);
+			int diam = g.get_d_entreXY(v, w);
 			System.out.println("v="+v);
 			System.out.println("w="+w);
 			System.out.println("diam>="+diam);
+			mem();
 		}else if(action.compareTo("4-sweep") == 0) {
 			//TODO les else autres actions
 		}else {

@@ -101,28 +101,19 @@ public class Graph {
 		return degMax;
 	}
 	
-	public int get_d_entre(int x, int y) {
+	//Retourne la distance entre X et Y
+	public int get_d_entreXY(int x, int y) {
 		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+		//Commande un BFS partiel (qui prend fin une fois l'objectif atteint)
 		return pl.Breadth_First_Search(this, x, y);
 	}
 	
-	//Nouvelle fonction retourne le sommet avec la plus grande distance avec u
+	//Retourne le sommet avec le éloigné de u
 	public int get_plus_eloigne(int u) {
-		int dmax = 0;//la distance maximal trouvée entre 2 voisins
-		int v = u;//Le sommet le plus éloigné, si un sommet est isolé il se renvera lui-même
-		int d;//distance observée
-		//TODO: Pas bon méthodologie quadratic trop lourde, revoir le "Parcour_Largeur" directement
-		for(int i=0;i<nbS;i++) {
-			if(i != u) {
-				d = get_d_entre(u, i);
-				System.out.println("distance entre "+u+" et "+i+" = "+d);
-				if(d > dmax) {//1er max courrant trouvé
-					dmax = d;
-					v = i;
-				}
-			}
-		}
-		return v;
+		//On va effectuer un parcours en Largeur complet.
+		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+		//Commande un BFS total partant de u
+		return pl.Breadth_First_Search(this, u);
 	}
 	
 }

@@ -39,7 +39,7 @@ public class Parcour_Largeur {
 		}
 	}
 	
-	//TODO: est strop spécifiq à arrivé et départ, faire un BFS qui ne fasse qu'un seul parcours puis retourne le dernier pts visité avec la d la plus élevée
+	//Retourne la distance entre le sommet "ori" et "obj", arrête le BFS une fois l'objectif atteint
 	public int  Breadth_First_Search(Graph g, int ori, int obj) {
 		dist[ori] = 0;//L'origine est située à une distance 0 d'elle même
 		file.push(ori);
@@ -55,5 +55,29 @@ public class Parcour_Largeur {
 		}
 		//On ne peut pas trouver l'objectif en partant de l'origine donnée...
 		return -1;//si les 2 sommets ne sont pas liés alors on retourne -1
+	}
+	
+	//Overright: retourne le sommet le plus éloigné du sommet d'origine
+	public int  Breadth_First_Search(Graph g, int ori) {
+		//System.out.println("=>Parcours en largeur partant de "+ori);
+		dist[ori] = 0;//L'origine est située à une distance 0 d'elle même
+		file.push(ori);
+		deja_vu[ori] = true;
+		int x;//L'élément à partir duquel l'on va effectuer le parcours
+		int Dmax = -1;//La Distance maximal courrant de ori à un autre point
+		int Smax=ori;//le Sommet le plus éloigné de ori, si le point est isolé il se renvera lui-même 
+		while(!file.isEmpty()) {
+			x = file.poll();//On tire un élément de la liste (qui sera retiré ensuite)
+			//System.out.print("Parcours du sommet "+x);
+			//Si on a atteint le sommet que l'on cherchais on retourne la distance
+			Parcour(g, x);
+			//System.out.println(" de distance "+dist[x]+" de "+ori);
+			if(dist[x] > Dmax) {
+				Dmax = dist[x];
+				Smax = x;
+			}
+		}
+		//Le parcours en largeur est terminé
+		return Smax;//Le dernier sommet visité devrai être le pts le plus éloigné: si retourn -1 il y a eu un problème...
 	}
 }
