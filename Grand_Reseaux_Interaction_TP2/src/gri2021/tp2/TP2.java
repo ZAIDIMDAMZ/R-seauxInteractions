@@ -40,7 +40,6 @@ public class TP2 {
 			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
 			Graph g = new Graph(Reader);
 			//System.out.println("n = "+g.get_nbS()+", m = "+g.get_nbA()+", degMax = "+g.get_degMax());
-			//print_voisins(u,g);
 			int v = g.get_plus_eloigne(u);
 			int w = g.get_plus_eloigne(v);
 			//int diam = g.get_d_entreXY(v, w);
@@ -50,7 +49,6 @@ public class TP2 {
 			System.out.println("diam>="+diam);
 			mem();
 		}else if(action.compareTo("4-sweep") == 0) {
-			//TODO
 			//System.out.println("Lecture du graph en cours:");
 			Reader.Read();
 			//System.out.println("Lecture terminée:");
@@ -75,6 +73,23 @@ public class TP2 {
 			int diam = g.get_dmax_pl();
 			System.out.println("diam>="+diam);
 			mem();
+		}else if(action.compareTo("sum-sweep") == 0) {
+			//System.out.println("Lecture du graph en cours:");
+			Reader.Read();
+			//System.out.println("Lecture terminée:");
+			mem();
+			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
+			Graph g = new Graph(Reader);
+			//System.out.println("n = "+g.get_nbS()+", m = "+g.get_nbA()+", degMax = "+g.get_degMax());
+			int[] sumdist = new int[g.get_nbS()];
+			//initialiser les valeurs
+			for(int i = 0;i<sumdist.length;i++) {
+				sumdist[i] = 0;
+			}
+			int v = g.get_plus_eloigne(u);
+			sumdist[v] = g.get_dmax_pl();
+			//???TODO????
+			
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}
