@@ -6,6 +6,7 @@ public class Graph {
 	//int[] sommets;//Tout les sommets ne vont pas forcément de 0 à (nbs-1)
 	int[][] ls_adja;//TODO: voir la correction, cette représentation de l'adjascence est sûrement fausse
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
+	Parcour_Largeur pl = null;//Le graph peut garder en mémoire le résultat d'1 parcours en longueur à la fois, cela poura être utile pour réutiliser un résultat de parcours déjà effectué
 	
 	//Renvoie le nombre de voisin d'un sommet donné??
 	public int neighbors(int u) {
@@ -107,7 +108,7 @@ public class Graph {
 	
 	//Retourne la distance entre X et Y
 	public int get_d_entreXY(int x, int y) {
-		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+		pl = new Parcour_Largeur(nbS);
 		//Commande un BFS partiel (qui prend fin une fois l'objectif atteint)
 		return pl.Breadth_First_Search(this, x, y);
 	}
@@ -115,9 +116,25 @@ public class Graph {
 	//Retourne le sommet avec le éloigné de u
 	public int get_plus_eloigne(int u) {
 		//On va effectuer un parcours en Largeur complet.
-		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+		pl = new Parcour_Largeur(nbS);
 		//Commande un BFS total partant de u
 		return pl.Breadth_First_Search(this, u);
+	}
+	
+	//Retourne la distance maximale observée par un parcours en Largeur terminé
+	public int get_dmax_pl() throws Exception {
+		if(pl != null) {
+			return pl.get_dist_max();
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	//Retourne un sommet m situé au milieu du chemin entre l'origine et le sommet le plus éloigné d'un parcours en Largeur terminé
+	public int get_sommet_m(int w) throws Exception {
+		if(pl != null) {
+			return pl.get_pts_m(this, w);
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
 	}
 	
 }
