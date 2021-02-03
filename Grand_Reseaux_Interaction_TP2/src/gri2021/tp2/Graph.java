@@ -4,8 +4,9 @@ public class Graph {
 	private static int NULL = -1;//indique qu'un élément est non-initialisé
 	int nbS, nbA;//nb sommets et arrêtes
 	//int[] sommets;//Tout les sommets ne vont pas forcément de 0 à (nbs-1)
-	int[] ls_adja[];//TODO: voir la correction, cette représentation de l'adjascence est sûrement fausse
+	int[][] ls_adja;//TODO: voir la correction, cette représentation de l'adjascence est sûrement fausse
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
+	Parcour_Largeur pl = null;//Le graph peut garder en mémoire le résultat d'1 parcours en longueur à la fois, cela poura être utile pour réutiliser un résultat de parcours déjà effectué
 	
 	//Renvoie le nombre de voisin d'un sommet donné??
 	public int neighbors(int u) {
@@ -32,29 +33,32 @@ public class Graph {
 		return null;
 	}
 	
-	//TODO: à corriger, on ne peut parcourir les sommets que dans un sens et pas l'autre!
+	//On peut maintenant lire le graph dans les 2 sens
 	private void stock_adja(int[] origines, int[] extremites) {
 		for(int i = 0;i<nbA;i++) {
 			if(origines[i] != -1 && (ls_adja[origines[i]] != null)) {//On vérifie si le sommet "i" n'est pas dans le graph car il n'y a pas forcément tt les sommets de 0 à (nbS - 1)
 				//On stock le nouvel adjasent
-				int j = neighbors(origines[i]);
+				int j = neighbors(origines[i]);//j = le nombre actuel de voisins observés pour le sommet indiqué par origines[i]
 				//System.out.println("j = "+j);
 				ls_adja[origines[i]][j] = extremites[i];
-				//!!! on peut traverser le graph ds les 2 sens!!!
-				//ls_adja[origines[i]][extremites[i]] = j;
+				//On stocke l'adjascence de l'extrêmité
+				int k = neighbors(extremites[i]);//k = le nombre actuel de voisins observés pour le point origines[i]
+				ls_adja[extremites[i]][k] = origines[i];
 				//On vérivie si cela ne marque pas le nouveau degré maxiaml attenit
 				if((j+1) > degMax) {
 					degMax = (j+1);
+				}else if((k+1) > degMax) {
+					degMax = (k+1);
 				}
 			}
 		}
 	}
 	
 	//Va indiquer combiens de voisins possède le sommet passé en paramètre
-		public int get_neighborsX(int x, int[] origines) {
+		public int get_neighborsX(int x, int[] origines, int[] extremites) {
 			int v=0;//Indique le nombre de voisins
 			for(int i=0;i<nbS;i++) {
-				if(origines[i] == x) {
+				if((origines[i] == x) || ((extremites[i] == x))) {
 					v++;
 				}
 			}
@@ -75,10 +79,11 @@ public class Graph {
 		for(int i = 0;i<nbS;i++) {
 			//sommets[i] = i;
 			//System.out.println("ini tableau i = "+i);
-			if(get_neighborsX(i, origines) != 0) {
-				ls_adja[i] = new int[get_neighborsX(i, origines)];
-				//System.out.println("Le sommet "+0+" a "+read.get_neighborsX(0)+" voisins");
-				//Initialisation edjasences
+			int v_de_i = get_neighborsX(i, origines, extremites);//Le nombre de voisins du point "i", n'est calculé qu'une fois par i pour gagner du temps
+			if(v_de_i > 0) {
+				ls_adja[i] = new int[v_de_i];
+				//System.out.println("Le sommet "+i+" a "+v_de_i+" voisins");
+				//Initialisation adjasences
 				for(int j = 0;j<ls_adja[i].length;j++) {
 					ls_adja[i][j] = NULL;
 				}
@@ -101,28 +106,48 @@ public class Graph {
 		return degMax;
 	}
 	
-	public int get_d_entre(int x, int y) {
-		Parcour_Largeur pl = new Parcour_Largeur(nbS);
+	//Retourne la distance entre X et Y
+	public int get_d_entreXY(int x, int y) {
+		pl = new Parcour_Largeur(nbS);
+		//Commande un BFS partiel (qui prend fin une fois l'objectif atteint)
 		return pl.Breadth_First_Search(this, x, y);
 	}
 	
-	//Nouvelle fonction retourne le sommet avec la plus grande distance avec u
+	//Retourne le sommet avec le éloigné de u
 	public int get_plus_eloigne(int u) {
-		int dmax = 0;//la distance maximal trouvée entre 2 voisins
-		int v = u;//Le sommet le plus éloigné, si un sommet est isolé il se renvera lui-même
-		int d;//distance observée
-		//TODO: Pas bon méthodologie quadratic trop lourde, revoir le "Parcour_Largeur" directement
-		for(int i=0;i<nbS;i++) {
-			if(i != u) {
-				d = get_d_entre(u, i);
-				System.out.println("distance entre "+u+" et "+i+" = "+d);
-				if(d > dmax) {//1er max courrant trouvé
-					dmax = d;
-					v = i;
-				}
-			}
+		//On va effectuer un parcours en Largeur complet.
+		pl = new Parcour_Largeur(nbS);
+		//Commande un BFS total partant de u
+		return pl.Breadth_First_Search(this, u);
+	}
+	
+	//Retourne la distance maximale observée par un parcours en Largeur terminé
+	public int get_dmax_pl() throws Exception {
+		if(pl != null) {
+			return pl.get_dist_max();
 		}
-		return v;
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	//Retourne un sommet m situé au milieu du chemin entre l'origine et le sommet le plus éloigné d'un parcours en Largeur terminé
+	public int get_sommet_m(int w) throws Exception {
+		if(pl != null) {
+			return pl.get_pts_m(this, w);
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	//Retourne la somme des distances depuis le sommet d'origine d'un parcours en largeur terminé
+	public int[] maj_sumdist(int[] sumdist) throws Exception {
+		if(pl != null) {
+			int[] dist = pl.get_dist();
+			for(int i = 0;i<sumdist.length;i++) {
+				//?? On met à jours la somme des distances ??
+				sumdist[i] += dist[i];
+			}
+			return sumdist;
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
 	}
 	
 }
