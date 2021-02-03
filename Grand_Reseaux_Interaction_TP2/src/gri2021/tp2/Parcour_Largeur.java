@@ -121,4 +121,11 @@ public class Parcour_Largeur {
 		}
 		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
 	}
+	
+	public int[] get_dist() throws Exception {
+		if(done) {
+			return dist;
+		}
+		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
+	}
 }

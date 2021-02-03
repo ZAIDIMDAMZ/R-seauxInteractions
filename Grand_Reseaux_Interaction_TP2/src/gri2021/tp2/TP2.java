@@ -19,6 +19,18 @@ public class TP2 {
 			System.out.print(""+lsV[i]+" ");
 		}
 	}
+	
+	//Retourne le plus grand élément d'un tableau
+	private static int get_higher(int[] tbl) {
+		int max = -1;
+		int s = -1;
+		for(int i=0;i<tbl.length;i++) {
+			if(tbl[i] > max) {
+				s = i;
+			}
+		}
+		return s;
+	}
 
 	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1
 	public static void main(String[] args) throws Exception {
@@ -87,8 +99,28 @@ public class TP2 {
 				sumdist[i] = 0;
 			}
 			int v = g.get_plus_eloigne(u);
-			sumdist[v] = g.get_dmax_pl();
+			//sumdist[v] = g.get_dmax_pl();
 			//???TODO????
+			sumdist = g.maj_sumdist(sumdist);
+			int depart = get_higher(sumdist);
+			int w = g.get_plus_eloigne(depart);
+			//MAJ des somme de distances
+			sumdist = g.maj_sumdist(sumdist);
+			depart = get_higher(sumdist);//Recherche du nouveau départ
+			int x = g.get_plus_eloigne(depart);
+			sumdist = g.maj_sumdist(sumdist);
+			//!TODO! Je n'ai pas compris ce qui est demandé par "ecc"
+			int diam;
+			if((sumdist[u] > sumdist[v]) && (sumdist[u] > sumdist[w]) && (sumdist[u] > sumdist[x])) {
+				diam = sumdist[u];
+			}else if((sumdist[v] > sumdist[u]) && (sumdist[v] > sumdist[w]) && (sumdist[v] > sumdist[x])) {
+				diam = sumdist[v];
+			}else if((sumdist[w] > sumdist[u]) && (sumdist[w] > sumdist[v]) && (sumdist[w] > sumdist[x])) {
+				diam = sumdist[w];
+			}else {
+				diam = sumdist[x];
+			}
+			System.out.println("diam?="+diam+"??");
 			
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");

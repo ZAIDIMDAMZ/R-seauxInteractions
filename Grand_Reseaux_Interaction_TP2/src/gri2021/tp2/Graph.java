@@ -137,4 +137,17 @@ public class Graph {
 		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
 	}
 	
+	//Retourne la somme des distances depuis le sommet d'origine d'un parcours en largeur terminé
+	public int[] maj_sumdist(int[] sumdist) throws Exception {
+		if(pl != null) {
+			int[] dist = pl.get_dist();
+			for(int i = 0;i<sumdist.length;i++) {
+				//?? On met à jours la somme des distances ??
+				sumdist[i] += dist[i];
+			}
+			return sumdist;
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
 }
