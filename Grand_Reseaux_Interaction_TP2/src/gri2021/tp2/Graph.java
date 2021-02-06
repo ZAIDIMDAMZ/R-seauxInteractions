@@ -37,13 +37,15 @@ public class Graph {
 		return null;
 	}
 	
+	//TODO: À corriger, ne marche pas sur certains gros graphes
 	//On peut maintenant lire le graph dans les 2 sens
 	private void stock_adja(int[] origines, int[] extremites) {
 		for(int i = 0;i<nbA;i++) {
 			if(origines[i] != -1 && (ls_adja[origines[i]] != null)) {//On vérifie si le sommet "i" n'est pas dans le graph car il n'y a pas forcément tt les sommets de 0 à (nbS - 1)
 				//On stock le nouvel adjasent
 				int j = neighbors(origines[i]);//j = le nombre actuel de voisins observés pour le sommet indiqué par origines[i]
-				//System.out.println("j = "+j);
+				System.out.println("orignies[i] = "+origines[i]+" et j = "+j);
+				//System.out.println("A "+ls_adja[origines[i]].length+" voisins");
 				ls_adja[origines[i]][j] = extremites[i];
 				//On stocke l'adjascence de l'extrêmité
 				int k = neighbors(extremites[i]);//k = le nombre actuel de voisins observés pour le point origines[i]
@@ -58,6 +60,7 @@ public class Graph {
 		}
 	}
 	
+	//TODO: À corriger, semble parfois renvoyer de mauvaises valeurs
 	//Va indiquer combiens de voisins possède le sommet passé en paramètre
 		public int get_neighborsX(int x, int[] origines, int[] extremites) {
 			int v=0;//Indique le nombre de voisins
@@ -85,8 +88,9 @@ public class Graph {
 			//System.out.println("ini tableau i = "+i);
 			int v_de_i = get_neighborsX(i, origines, extremites);//Le nombre de voisins du point "i", n'est calculé qu'une fois par i pour gagner du temps
 			if(v_de_i > 0) {
+				//TODO: construit parfois des liste trop petite
 				ls_adja[i] = new int[v_de_i];
-				//System.out.println("Le sommet "+i+" a "+v_de_i+" voisins");
+				System.out.println("Le sommet "+i+" a "+v_de_i+" voisins");
 				//Initialisation adjasences
 				for(int j = 0;j<ls_adja[i].length;j++) {
 					ls_adja[i][j] = NULL;

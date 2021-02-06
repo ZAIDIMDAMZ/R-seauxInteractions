@@ -33,6 +33,7 @@ public class TP2 {
 	}
 
 	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1 ; sum-sweep g.txt 6 1 ; diametre g.txt 6 1 ; bigest-cc g.txt 6
+	//bigest-cc g.txt 396160 1
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
