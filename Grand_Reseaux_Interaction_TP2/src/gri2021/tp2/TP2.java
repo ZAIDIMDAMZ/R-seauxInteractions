@@ -32,7 +32,7 @@ public class TP2 {
 		return s;
 	}
 
-	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1 ; sum-sweep g.txt 6 1 ; diametre g.txt 6 1
+	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1 ; sum-sweep g.txt 6 1 ; diametre g.txt 6 1 ; bigest-cc g.txt 6
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -179,6 +179,37 @@ public class TP2 {
 			}
 			System.out.println("diam="+diamlow);
 			
+			//L'instruction bigest-cc retournera un point de la plus grande composante
+		}else if(action.compareTo("bigest-cc") == 0) {
+			//System.out.println("Lecture du graph en cours:");
+			Reader.Read();
+			//System.out.println("Lecture terminée:");
+			mem();
+			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
+			Graph g = new Graph(Reader);
+			boolean [] deja_lu = new boolean[g.get_nbS()];//Indique si tout les sommets du graph ont été visités au moin une fois
+			for(int i = 0;i<deja_lu.length;i++) {deja_lu[i] = false;}//On indique qu'aucun sommet n'a été visité
+			int cc_max = 0;//Indique la distance maximale atteinte parmi toutes les compossantes du graph
+			int s = -1;//Le sommet que l'on retournera
+			//On va essayer de parcourir tout les sommets du Graph
+			for(int i = 0;i<g.get_nbS();i++) {
+				//On effectue un parcours en largeur du premier point pas encore visité que l'on trouve
+				if(deja_lu[i] == false) {
+					System.out.println("BFS partant de "+i);
+					g.get_plus_eloigne(i);//On fait un parcours en largeur complet en partant du point
+					int dmax = g.get_dmax_pl();//La distance maxiamle observée pour ce BFS
+					//Ce point ammène t'il à la plus grande CC?
+					if(dmax > cc_max) {
+						cc_max = dmax;
+						s = i;
+					}
+					//On met à jours les sommets visités lors des parcours en largeur
+					g.maj_deja_lu(deja_lu);//Inutile de refaire un BFS partant d'un point qui aura déjà été atteint
+				}
+				mem();
+			}
+			System.out.println("La plus grande compossante du graph est de taille = "+cc_max+", elle peut être atteinte par le sommet:"+s);
+		
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}

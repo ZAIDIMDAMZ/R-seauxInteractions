@@ -179,6 +179,20 @@ public class Graph {
 		}
 		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
 	}
+	
+	//met à jours les sommets qui ont été visités durrant le programme
+		public boolean[] maj_deja_lu(boolean [] deja_lu) throws Exception{
+			if(pl != null) {
+				boolean [] CC_actu = pl.get_deja_vu();
+				for(int i=0;i<deja_lu.length;i++) {
+					if(CC_actu[i]) {
+						deja_lu[i] = true;//On aura déjà ateint ce point, on n'y retournera plus pour gagner du temps
+					}
+				}
+				return pl.get_deja_vu();
+			}
+			throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+		}
 		
 	
 }
