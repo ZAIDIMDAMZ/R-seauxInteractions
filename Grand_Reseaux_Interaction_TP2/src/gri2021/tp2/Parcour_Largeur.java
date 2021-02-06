@@ -128,4 +128,11 @@ public class Parcour_Largeur {
 		}
 		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
 	}
+	
+	public boolean[] get_deja_vu() throws Exception {
+		if(done) {
+			return deja_vu;
+		}
+		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
+	}
 }

@@ -32,7 +32,7 @@ public class TP2 {
 		return s;
 	}
 
-	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1
+	//2-sweep g.txt 6 1 ; 4-sweep g.txt 6 1 ; sum-sweep g.txt 6 1 ; diametre g.txt 6 1
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -126,6 +126,58 @@ public class TP2 {
 				diam = ecc[x];
 			}
 			System.out.println("diam="+diam);
+		}else if(action.compareTo("diametre") == 0) {
+			//System.out.println("Lecture du graph en cours:");
+			Reader.Read();
+			//System.out.println("Lecture terminée:");
+			mem();
+			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
+			Graph g = new Graph(Reader);
+			//System.out.println("n = "+g.get_nbS()+", m = "+g.get_nbA()+", degMax = "+g.get_degMax());
+			
+			//TODO
+			
+			int[] eccsup = new int[g.get_nbS()];//borne supérieur pour chaque sommet
+			//initialiser les valeurs
+			for(int i = 0;i<eccsup.length;i++) {
+				eccsup[i] = estim +1;//Il faut donné une valeur initiale assez importante, comme c'est initialement égal au nombre d'arrêtes + 1 on est sûr qu'il y aurra plus petit dés la première verif
+			}
+			int diamlow = -1;
+			int a = u;//Le premier a est "u"
+			boolean [] CCu = null;//Les sommets faissant partie de la compossante connexe partant de "u"
+			//tant qu'on ne retourne pas l'estimation du diamettre
+			while(true) {
+				//???TODO: À vérifier???
+				g.get_plus_eloigne(a);//Effectuer un parcours en largeur à partir dea.
+				int ecc_a = g.get_dmax_pl();
+				//Le premier PL effectué part de "u", "CCu" ne sera définit qu'une seule fois
+				if(CCu == null) {
+					//Les sommets qui ont été marqués comme "deja_vu" durrant le parcours en largeur partant de "u" forment sa composante connexe:
+					CCu = g.get_CC();
+					//(Le but est d'éviter de séparer le premier PL de la boucle while princiapale)
+				}
+				//Si ecc(a)> diamlow, alors mettre à jour diamlow:=ecc(a)
+				if(ecc_a > diamlow) {diamlow = ecc_a;}
+				int [] b = new int[g.get_nbS()];//La borne de chaque sommet
+				int [] dist = g.get_dist();//Les distances de a à un point donné
+				int max = -1;//La borne la plus élevée observée
+				for(int i = 0;i<b.length;i++) {
+					//TODO: Y a t'il un problème avec les sommets qui n'apparaissent pas sur le Graph? (il n'y a pas forcément tout les sommet de 0 à nbS...)
+					b[i] = dist[i] +ecc_a;//Initialisation des bornes:
+					if(b[i] < eccsup[i]) {
+						eccsup[i] = b[i];
+					}
+					//Choisir un sommet a € Cu de borne supérieur maximum
+					if(CCu[i] && eccsup[i] > max){
+						max = eccsup[i];
+						a = i;
+					}
+				}
+				if(eccsup[a] <= diamlow) {
+					break;//On a l'estimation du diamètre
+				}
+			}
+			System.out.println("diam="+diamlow);
 			
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");

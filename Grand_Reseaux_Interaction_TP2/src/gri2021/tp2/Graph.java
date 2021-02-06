@@ -151,18 +151,34 @@ public class Graph {
 	}
 	
 	//Met à jours l'excentricité de chaque sommet
-		public int[] maj_ecc(int[] ecc) throws Exception {
-			if(pl != null) {
-				int[] dist = pl.get_dist();
-				for(int i = 0;i<ecc.length;i++) {
-					//Si la distance d'un sommet donné est plus élevée que sa précédente excentricité, elle deviendra la nouvelle valeur de son excentricité
-					if(ecc[i] < dist[i]) {
-						ecc[i] = dist[i];
-					}
+	public int[] maj_ecc(int[] ecc) throws Exception {
+		if(pl != null) {
+			int[] dist = pl.get_dist();
+			for(int i = 0;i<ecc.length;i++) {
+				//Si la distance d'un sommet donné est plus élevée que sa précédente excentricité, elle deviendra la nouvelle valeur de son excentricité
+				if(ecc[i] < dist[i]) {
+					ecc[i] = dist[i];
 				}
-				return ecc;
 			}
-			throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+			return ecc;
 		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	public int[] get_dist() throws Exception{
+		if(pl != null) {
+			return pl.get_dist();
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	//retourne les sommets formant la compossante fortement connexe résultant du dernier parcours en largeur effectué
+	public boolean[] get_CC() throws Exception{
+		if(pl != null) {
+			return pl.get_deja_vu();
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+		
 	
 }
