@@ -94,33 +94,38 @@ public class TP2 {
 			Graph g = new Graph(Reader);
 			//System.out.println("n = "+g.get_nbS()+", m = "+g.get_nbA()+", degMax = "+g.get_degMax());
 			int[] sumdist = new int[g.get_nbS()];
+			int[] ecc = new int[g.get_nbS()];//Met à jours l'excentricité de chaque sommet à tout moment du graphe
 			//initialiser les valeurs
 			for(int i = 0;i<sumdist.length;i++) {
 				sumdist[i] = 0;
+				ecc[i] = -1;//L'excentricité d'un sommet est la distance la plus élevée observée sur tout les parcours en largeur (ds les limites de notre programme)
 			}
 			int v = g.get_plus_eloigne(u);
 			//sumdist[v] = g.get_dmax_pl();
 			//???TODO????
 			sumdist = g.maj_sumdist(sumdist);
+			ecc = g.maj_ecc(ecc);
 			int depart = get_higher(sumdist);
 			int w = g.get_plus_eloigne(depart);
 			//MAJ des somme de distances
 			sumdist = g.maj_sumdist(sumdist);
+			ecc = g.maj_ecc(ecc);
 			depart = get_higher(sumdist);//Recherche du nouveau départ
 			int x = g.get_plus_eloigne(depart);
 			sumdist = g.maj_sumdist(sumdist);
-			//!TODO! Je n'ai pas compris ce qui est demandé par "ecc"
+			ecc = g.maj_ecc(ecc);
+			//ecc = plus longue distance observée en paratant d'un point donné vers tout les autres possibles
 			int diam;
-			if((sumdist[u] > sumdist[v]) && (sumdist[u] > sumdist[w]) && (sumdist[u] > sumdist[x])) {
-				diam = sumdist[u];
-			}else if((sumdist[v] > sumdist[u]) && (sumdist[v] > sumdist[w]) && (sumdist[v] > sumdist[x])) {
-				diam = sumdist[v];
-			}else if((sumdist[w] > sumdist[u]) && (sumdist[w] > sumdist[v]) && (sumdist[w] > sumdist[x])) {
-				diam = sumdist[w];
+			if((ecc[u] > ecc[v]) && (ecc[u] > ecc[w]) && (ecc[u] > ecc[x])) {
+				diam = ecc[u];
+			}else if((ecc[v] > ecc[u]) && (ecc[v] > ecc[w]) && (ecc[v] > ecc[x])) {
+				diam = ecc[v];
+			}else if((ecc[w] > ecc[u]) && (ecc[w] > ecc[v]) && (ecc[w] > ecc[x])) {
+				diam = ecc[w];
 			}else {
-				diam = sumdist[x];
+				diam = ecc[x];
 			}
-			System.out.println("diam?="+diam+"??");
+			System.out.println("diam="+diam);
 			
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");

@@ -150,4 +150,19 @@ public class Graph {
 		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
 	}
 	
+	//Met à jours l'excentricité de chaque sommet
+		public int[] maj_ecc(int[] ecc) throws Exception {
+			if(pl != null) {
+				int[] dist = pl.get_dist();
+				for(int i = 0;i<ecc.length;i++) {
+					//Si la distance d'un sommet donné est plus élevée que sa précédente excentricité, elle deviendra la nouvelle valeur de son excentricité
+					if(ecc[i] < dist[i]) {
+						ecc[i] = dist[i];
+					}
+				}
+				return ecc;
+			}
+			throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+		}
+	
 }
