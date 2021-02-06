@@ -181,6 +181,7 @@ public class TP2 {
 			
 			//L'instruction bigest-cc retournera un point de la plus grande composante
 		}else if(action.compareTo("bigest-cc") == 0) {
+			//Note: Le dernier paramètre ne sert à rien mais il faut tout de même le mettre pour que le programme puisse se lancer...
 			//System.out.println("Lecture du graph en cours:");
 			Reader.Read();
 			//System.out.println("Lecture terminée:");
@@ -197,14 +198,15 @@ public class TP2 {
 				if(deja_lu[i] == false) {
 					System.out.println("BFS partant de "+i);
 					g.get_plus_eloigne(i);//On fait un parcours en largeur complet en partant du point
-					int dmax = g.get_dmax_pl();//La distance maxiamle observée pour ce BFS
+					//Note: je suis parti du principe que la plus grande compossante connexe était celle contenant le plus de sommets
+					int dmax = g.get_size_CC();//La distance maxiamle observée pour ce BFS
 					//Ce point ammène t'il à la plus grande CC?
 					if(dmax > cc_max) {
 						cc_max = dmax;
 						s = i;
 					}
 					//On met à jours les sommets visités lors des parcours en largeur
-					g.maj_deja_lu(deja_lu);//Inutile de refaire un BFS partant d'un point qui aura déjà été atteint
+					deja_lu = g.maj_deja_lu(deja_lu);//Inutile de refaire un BFS partant d'un point qui aura déjà été atteint
 				}
 				mem();
 			}

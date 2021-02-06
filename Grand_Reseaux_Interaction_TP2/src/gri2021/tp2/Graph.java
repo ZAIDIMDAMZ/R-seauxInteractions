@@ -26,6 +26,10 @@ public class Graph {
 		if(ls_adja[u] != null) {
 			int[] ls = new int[ls_adja[u].length];
 			for(int i=0;i<ls.length;i++) {
+				//Si l'un des "voisins" de u est -1 cela signifie que le point ne se trouve pas sur le Graph
+				if(ls_adja[u][i] == -1) {
+					return null;
+				}
 				ls[i] = ls_adja[u][i];
 			}
 			return ls;
@@ -181,18 +185,33 @@ public class Graph {
 	}
 	
 	//met à jours les sommets qui ont été visités durrant le programme
-		public boolean[] maj_deja_lu(boolean [] deja_lu) throws Exception{
-			if(pl != null) {
-				boolean [] CC_actu = pl.get_deja_vu();
-				for(int i=0;i<deja_lu.length;i++) {
-					if(CC_actu[i]) {
-						deja_lu[i] = true;//On aura déjà ateint ce point, on n'y retournera plus pour gagner du temps
-					}
+	public boolean[] maj_deja_lu(boolean [] deja_lu) throws Exception{
+		if(pl != null) {
+			boolean [] CC_actu = pl.get_deja_vu();
+			for(int i=0;i<deja_lu.length;i++) {
+				if(CC_actu[i]) {
+					deja_lu[i] = true;//On aura déjà ateint ce point, on n'y retournera plus pour gagner du temps
 				}
-				return pl.get_deja_vu();
 			}
-			throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+			return pl.get_deja_vu();
 		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
+	
+	//met à jours les sommets qui ont été visités durrant le programme
+	public int get_size_CC() throws Exception{
+		if(pl != null) {
+			boolean [] deja_vu = pl.get_deja_vu();
+			int size = 0;
+			for(int i=0;i<deja_vu.length;i++) {
+				if(deja_vu[i]) {
+					size++;//On compte combiens de sommet ont été observés
+				}
+			}
+			return size;
+		}
+		throw new Exception("Aucun Parcours en Largeur n'a été effectué");
+	}
 		
 	
 }
