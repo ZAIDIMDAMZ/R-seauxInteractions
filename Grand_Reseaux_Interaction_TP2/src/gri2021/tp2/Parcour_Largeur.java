@@ -31,7 +31,7 @@ public class Parcour_Largeur {
 			}
 			System.out.println();*/
 			for(int i=0;i<ls_v.length;i++) {//Pour tout les voisins de x
-				//System.out.println("i = "+i+", ls_v de taille = "+ls_v.length + "ls_v[i] = " + ls_v[i]);
+				//System.out.println("i = "+i+", ls_v de taille = "+ls_v.length + " ls_v["+i+"] = " + ls_v[i]);
 				if(!deja_vu[ls_v[i]]) {//Si le voisin n'a pas déjà été visité
 					file.push(ls_v[i]);//On l'ajoute à la file
 					deja_vu[ls_v[i]] = true;//On le marque
@@ -125,6 +125,13 @@ public class Parcour_Largeur {
 	public int[] get_dist() throws Exception {
 		if(done) {
 			return dist;
+		}
+		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
+	}
+	
+	public boolean[] get_deja_vu() throws Exception {
+		if(done) {
+			return deja_vu;
 		}
 		throw new Exception("Le parcours en Largeur n'a pas pu être effectué");
 	}
