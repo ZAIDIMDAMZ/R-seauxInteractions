@@ -44,7 +44,7 @@ public class Graph {
 			if(origines[i] != -1 && (ls_adja[origines[i]] != null)) {//On vérifie si le sommet "i" n'est pas dans le graph car il n'y a pas forcément tt les sommets de 0 à (nbS - 1)
 				//On stock le nouvel adjasent
 				int j = neighbors(origines[i]);//j = le nombre actuel de voisins observés pour le sommet indiqué par origines[i]
-				System.out.println("orignies[i] = "+origines[i]+" et j = "+j);
+				//System.out.println("orignies[i] = "+origines[i]+" et j = "+j);
 				//System.out.println("A "+ls_adja[origines[i]].length+" voisins");
 				ls_adja[origines[i]][j] = extremites[i];
 				//On stocke l'adjascence de l'extrêmité
@@ -90,7 +90,7 @@ public class Graph {
 			if(v_de_i > 0) {
 				//TODO: construit parfois des liste trop petite
 				ls_adja[i] = new int[v_de_i];
-				System.out.println("Le sommet "+i+" a "+v_de_i+" voisins");
+				//System.out.println("Le sommet "+i+" a "+v_de_i+" voisins");
 				//Initialisation adjasences
 				for(int j = 0;j<ls_adja[i].length;j++) {
 					ls_adja[i][j] = NULL;
@@ -113,6 +113,7 @@ public class Graph {
 	public int get_degMax() {
 		return degMax;
 	}
+	
 	
 	//Des fonctions spécifiques au TP2, ne serons peut-être pas pertinantes dans ce cas.
 	/*

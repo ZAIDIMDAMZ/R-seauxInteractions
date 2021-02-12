@@ -46,14 +46,16 @@ public class TP3 {
 			throw new Exception("Le paramètre 'estimation du nombre d'arcs' est erroné");
 		}
 		Lecteur_Fichier Reader = new Lecteur_Fichier(fichier, estim);
-		System.out.println("action = "+action+", fichier = "+fichier +", arg1 = "+estim+" et on part du point "+u);
+		//System.out.println("action = "+action+", fichier = "+fichier +", arg1 = "+estim+" et on part du point "+u);
 		if(action.compareTo("triangles") == 0) {
 			//System.out.println("Lecture du graph en cours:");
 			Reader.Read();
 			//System.out.println("Lecture terminée:");
-			mem();
+			//mem();
 			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
 			Graph g = new Graph(Reader);
+			Voisinage voisi = new Voisinage(g.nbS);
+			System.out.println(""+voisi.nb_triangles(u, g));
 			
 		}else if(action.compareTo("clust") == 0) {
 			/*
