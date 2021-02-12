@@ -5,6 +5,7 @@ public class Graph {
 	int nbS, nbA;//nb sommets et arrêtes
 	//int[] sommets;//Tout les sommets ne vont pas forcément de 0 à (nbs-1)
 	int[][] ls_adja;//TODO: À amméliorer
+	int [] deg;//La liste des degrés des sommets du graph
 	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
 	//Parcour_Largeur pl = null;//Le graph peut garder en mémoire le résultat d'1 parcours en longueur à la fois, cela poura être utile pour réutiliser un résultat de parcours déjà effectué
 	
@@ -56,6 +57,9 @@ public class Graph {
 				}else if((k+1) > degMax) {
 					degMax = (k+1);
 				}
+				//On met à jours le degré de chaque sommet
+				deg[origines[i]] = j+1;
+				deg[extremites[i]] = k+1;
 			}
 		}
 	}
@@ -75,6 +79,7 @@ public class Graph {
 	public Graph(Lecteur_Fichier read) {
 		this.nbS = read.nbr_sommets();
 		this.nbA = read.nbr_arretes();
+		this.deg = new int[nbS];
 		
 		//Origines et extremites des arretes:
 		int[] origines = read.get_ori();
@@ -114,6 +119,10 @@ public class Graph {
 		return degMax;
 	}
 	
+	//Retourne le degré d'un sommet
+	public int get_deg(int s) {
+		return deg[s];
+	}
 	
 	//Des fonctions spécifiques au TP2, ne serons peut-être pas pertinantes dans ce cas.
 	/*

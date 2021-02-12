@@ -64,11 +64,17 @@ public class TP3 {
 			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
 			Graph g = new Graph(Reader);
 			Voisinage voisi = new Voisinage(g.nbS);
-			int tri = voisi.nb_triangles(u, g);
+			//double [] cluL = new double[g.get_nbS()];//Le clustering local de cahque sommet
+			double cluL = 0.0;
 			
-			//Clustering local:
-			//TODO: renvoyer le degré du sommet = le nombre d'arrêtes qui pointent cer le sommet
-			//double cluL = (2*tri)/(deg(u)*(deg(u) - 1));//TODO faire ça pour chaque sommet du graphe et calculer moyenne
+			//Clustering local de chaque sommet:
+			for(int i = 0;i<g.get_nbS();i++) {
+				int tri = voisi.nb_triangles(u, g);
+				cluL += (double) ((2*tri)/(g.get_deg(u)*(g.get_deg(u) - 1)));
+				
+			}
+			cluL = cluL/g.get_nbS();
+			//Clustering local moyen:			
 			//TODO: fonction qui calcul nv = le nombre de "2 arêtes incidentes" du graphe
 			//double cluG = (3 * triG)/(nv);//TODO triG = nombre de triangles totales dans le graphe
 		}else {
