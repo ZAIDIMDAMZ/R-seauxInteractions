@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Grand_Reseaux_Interaction_TP1/src"/>
+	<classpathentry kind="src" path="Grand_Reseaux_Interaction_TP2/src"/>
+	<classpathentry kind="src" path="TP1_Rendu"/>
+	<classpathentry kind="output" path="Grand_Reseaux_Interaction_TP1/bin"/>
+</classpath>
