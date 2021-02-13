@@ -10,7 +10,6 @@ public class Graph implements Iterable<Integer> {
 	int nbS, nbA;//nb sommets et arrêtes
 	int[] adja;// la liste des adjasences concaténées
 	int [] offset; // offset[u] renvoie l'index des voisins de u dans son adjasence
-	int degMax=0;//Le degré maximal d'un sommet dans tout le graph
 	//Parcour_Largeur pl = null;//Le graph peut garder en mémoire le résultat d'1 parcours en longueur à la fois, cela poura être utile pour réutiliser un résultat de parcours déjà effectué
 	
 	
@@ -67,10 +66,6 @@ public class Graph implements Iterable<Integer> {
 	
 	public int get_nbA() {
 		return nbA;
-	}
-	
-	public int get_degMax() {
-		return degMax;
 	}
 	
 	//Retourne le degré d'un sommet
