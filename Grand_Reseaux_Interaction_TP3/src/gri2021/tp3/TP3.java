@@ -1,5 +1,7 @@
 package gri2021.tp3;
 
+import java.util.Iterator;
+
 public class TP3 {
 	
 	public static void mem() {
@@ -13,10 +15,10 @@ public class TP3 {
 	
 	//Fonction de debuggage: affiche la liste des voisins
 	public static void print_voisins(int x, Graph g) {
-		int [] lsV = g.get_neighbors(x);
+		Iterator<Integer> voisins = g.neighbors(x).iterator();
 		System.out.print("Voisins de "+x+": ");
-		for(int i = 0;i<lsV.length;i++) {
-			System.out.print(""+lsV[i]+" ");
+		while(voisins.hasNext()) {
+			System.out.print(""+voisins.next()+" ");
 		}
 	}
 	
@@ -52,7 +54,7 @@ public class TP3 {
 			//System.out.println("Lecture terminée:");
 			//mem();
 			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
-			Graph g = new Graph(Reader);
+			Graph g = new Graph(Reader, true);
 			Voisinage voisi = new Voisinage(g.nbS);
 			System.out.println(""+voisi.nb_triangles(u, g));
 			
@@ -62,7 +64,7 @@ public class TP3 {
 			//System.out.println("Lecture terminée:");
 			//mem();
 			//On génère un Graph pour mieux stocker les données qui viennent d'être lues
-			Graph g = new Graph(Reader);
+			Graph g = new Graph(Reader, true);
 			Voisinage voisi = new Voisinage(g.nbS);
 			//double [] cluL = new double[g.get_nbS()];//Le clustering local de cahque sommet
 			double cluL = 0.0;

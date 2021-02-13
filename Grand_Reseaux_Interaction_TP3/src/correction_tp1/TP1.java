@@ -2,6 +2,7 @@ package correction_tp1;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class TP1 {
@@ -45,6 +46,13 @@ public class TP1 {
         Graph g = new Graph(edg, true);
         System.out.println("n=" + g.n);
         System.out.println("m=" + g.m); 
+        
+        /*Expérimentation pour mieux comprendre la solution:*/
+        Iterator<Integer> nei = g.neighbors(1).iterator();
+        System.out.println("voisins de u: ");
+        while(nei.hasNext()) {
+        	System.out.print(""+nei.next()+" ");
+        }
         
         mem();
 

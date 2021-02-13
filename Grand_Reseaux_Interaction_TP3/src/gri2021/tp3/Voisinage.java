@@ -1,5 +1,7 @@
 package gri2021.tp3;
 
+import java.util.Iterator;
+
 //Cette fonction sert à vérifier quels sont les voisins d'un sommet
 public class Voisinage {
 	boolean[] is_v/*, deja_vu*/;
@@ -30,9 +32,10 @@ public class Voisinage {
 			return false;
 		}
 		//indique si les sommets x et y sont voisins l'un à l'autre
-		int[] ls_v = G.get_neighbors(x);
-		for(int i = 0;i < ls_v.length;i++) {
-			if(ls_v[i] == y) {
+		Iterator<Integer> ls_v = G.neighbors(x).iterator();
+		while(ls_v.hasNext()) {
+			int v = ls_v.next();
+			if(v == y) {
 				return true;
 			}
 		}
@@ -42,9 +45,9 @@ public class Voisinage {
 	public int nb_triangles(int u, Graph G) {
 		if(!done) {
 			//??? Je ne comprend
-			int[] ls_v = G.get_neighbors(u);
-			for(int i = 0;i<ls_v.length;i++) {
-				is_v[ls_v[i]] = true;
+			Iterator<Integer> ls_v = G.neighbors(u).iterator();
+			while(ls_v.hasNext()) {
+				is_v[ls_v.next()] = true;
 			}
 			//???
 			

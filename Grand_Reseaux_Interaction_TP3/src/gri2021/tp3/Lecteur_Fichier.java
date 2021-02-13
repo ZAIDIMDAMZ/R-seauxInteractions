@@ -38,13 +38,13 @@ public class Lecteur_Fichier {
 		return nb_arrete;
 	}
 	
-	/*public int get_depart_at(int i) {
+	public int get_depart_at(int i) {
 		return data_d[i];
 	}
 	
 	public int get_arive_at(int i) {
 		return data_a[i];
-	}*/
+	}
 	
 	public int[] get_ori() {
 		return data_d;
@@ -53,6 +53,7 @@ public class Lecteur_Fichier {
 	public int[] get_extremi() {
 		return data_a;
 	}
+	
 	
 	//Extrait les information intéressantes des la lignes
 	private void lire_arrete(String ligne, int i) {
@@ -131,4 +132,15 @@ public class Lecteur_Fichier {
 		}
 		System.out.println();
 	}
+	
+	//renvoie un tableau contenant le degré de chaque point
+	public int[] get_degs(boolean symmetrize) {
+		int[] deg = new int [nbr_sommets()];
+		for(int i = 0; i < nb_arrete;i++) {
+			deg[data_a[i]]++;
+			if(symmetrize) { deg[data_d[i]]++; }
+		}
+		return deg;
+	}
+	
 }

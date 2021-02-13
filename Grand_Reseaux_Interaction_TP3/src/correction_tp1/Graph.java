@@ -15,7 +15,7 @@ public class Graph implements Iterable<Integer> {
         n = edg.n;
         m = edg.m;
         // offsets :
-        int[] deg = edg.degrees(symmetrize);
+        int[] deg = edg.degrees(symmetrize);//Le degré de chaque points: le nombre de fois où il apparait dans le graph
         offset = new int[n+1];
         offset[0] = 0;
         for (int u = 0; u < n; ++u) {
