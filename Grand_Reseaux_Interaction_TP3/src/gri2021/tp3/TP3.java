@@ -45,7 +45,7 @@ public class TP3 {
 	}
 	
 	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123
-	// clust test.txt 7 ;
+	// clust test.txt 7 ; clust as-caida20071105-simple.txt 53381
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -75,7 +75,7 @@ public class TP3 {
 			
 			//Clustering local de chaque sommet:
 			for(int i = 0;i<g.get_nbS();i++) {
-				int tri = voisi.nb_triangles(i, g);
+				int tri = voisi.nb_triangles(i, g);//TODO: la fonction est lente à s'exécuter
 				//System.out.println("      Le sommet "+i+" est contenu dans "+tri+" triangles");
 				if(g.get_deg(i)*(g.get_deg(i) - 1) > 0){
 					//System.out.println("      deg("+i+") = "+g.get_deg(i));
@@ -91,18 +91,17 @@ public class TP3 {
 				}
 			}
 			cluL = cluL/g.get_nbS();//Calul du clustering local moyen
-			//Clustering local moyen:
-			int triG = voisi.nb_triangles_G(g);
-			int nv = voisi.get_nv(g);
-			//System.out.println("      Le Graph contient: "+triG+" triangles au total");
-			//System.out.println("      Le Graph contient: "+nv+" V");
-			//TODO: fonction qui calcul nv = le nombre de "2 arêtes incidentes" du graphe
-			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluL);
+			//Clustering local moyen:
+			//TODO: Ces fonctions sont lentes
+			int triG = voisi.nb_triangles_G(g);
+			System.out.println("      Le Graph contient: "+triG+" triangles au total");
+			int nv = voisi.get_nv(g);
+			System.out.println("      Le Graph contient: "+nv+" V");
+			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluG);
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}
-		//FINI
 	}
 }

@@ -49,6 +49,7 @@ public class Voisinage {
 		return false;
 	}
 	
+	//TODO: semble correcte mais est assez lente à s'exécuter
 	public int nb_triangles(int u, Graph G) {
 		//if(done) {
 			clear();//On réinitialise le tableau si nécessair
