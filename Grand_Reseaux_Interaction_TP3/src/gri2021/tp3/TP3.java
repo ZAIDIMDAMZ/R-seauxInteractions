@@ -93,10 +93,13 @@ public class TP3 {
 			cluL = cluL/g.get_nbS();//Calul du clustering local moyen
 			//Clustering local moyen:
 			int triG = voisi.nb_triangles_G(g);
-			System.out.println("Le Graph contient: "+triG+" triangles au total");
+			int nv = voisi.get_nv(g);
+			//System.out.println("      Le Graph contient: "+triG+" triangles au total");
+			//System.out.println("      Le Graph contient: "+nv+" V");
 			//TODO: fonction qui calcul nv = le nombre de "2 arêtes incidentes" du graphe
-			//double cluG = (3 * triG)/(nv);//TODO triG = nombre de triangles totales dans le graphe
+			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluL);
+			System.out.format("%.5f\n", cluG);
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}

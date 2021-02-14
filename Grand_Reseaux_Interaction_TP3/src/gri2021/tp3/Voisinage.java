@@ -5,7 +5,7 @@ import java.util.Iterator;
 //Cette fonction sert à vérifier quels sont les voisins d'un sommet
 public class Voisinage {
 	boolean[] is_v, deja_vu;
-	boolean done = false;//Indique si la fonction a déjà été effectuée
+	//boolean done = false;//Indique si la fonction a déjà été effectuée
 	int triangles = 0;//Le nombre de triangles
 	
 	Voisinage(int n){
@@ -25,7 +25,7 @@ public class Voisinage {
 			is_v[i] = false;
 		}
 		triangles = 0;
-		done = false;
+		//done = false;
 	}
 	
 	private void clear_deja_vu() {
@@ -50,9 +50,9 @@ public class Voisinage {
 	}
 	
 	public int nb_triangles(int u, Graph G) {
-		if(done) {
+		//if(done) {
 			clear();//On réinitialise le tableau si nécessair
-		}
+		//}
 		//??? Es-ce qui était attendu?
 		Iterator<Integer> ls_v = G.neighbors(u).iterator();
 		while(ls_v.hasNext()) {
@@ -83,7 +83,7 @@ public class Voisinage {
 				//deja_vu[i] = true;
 			}
 		}
-		done = true;
+		//done = true;
 		return triangles;
 	}
 	
@@ -97,5 +97,35 @@ public class Voisinage {
 		clear_deja_vu();
 		//On a le nombre de triangles du graph
 		return x;
+	}
+	
+	//Retourne le nombre de V partant du sommet s
+	private int get_V_started(Graph G, int s) {
+		clear();
+		int V = 0;
+		Iterator<Integer> ls_x = G.neighbors(s).iterator();//Liste des voisins directe de s
+		Iterator<Integer> ls_y;//Liste des valeurs possibles de y
+		while(ls_x.hasNext()) {
+			int x = ls_x.next();//On pioche le nouveau voisin de l'itérateur
+			ls_y = G.neighbors(x).iterator();
+			//On regarde où peut aller le voisin directe de X
+			while(ls_y.hasNext()) {
+				int y = ls_y.next();
+				//S'il ne retourne pas vers X, c'est un V possible
+				if(y != s) {
+					V++;
+				}
+			}
+		}
+		return V;
+	}
+	
+	//Retourne le nombre de "2 arêtes incidentes" (= des triades connexes) dans le graph
+	public int get_nv(Graph G) {
+		int nv = 0;
+		for(int i=0;i<is_v.length;i++) {
+			nv += get_V_started(G,i);
+		}
+		return nv;
 	}
 }
