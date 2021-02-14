@@ -44,8 +44,8 @@ public class TP3 {
 		return false;
 	}
 	
-	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123
-	// clust test.txt 7 ; clust as-caida20071105-simple.txt 53381
+	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123 ; triangles as20000102-simple.txt 12572 123
+	// clust test.txt 7 ; clust as-caida20071105-simple.txt 53381 ; clust as20000102-simple.txt 12572
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -95,9 +95,9 @@ public class TP3 {
 			//Clustering local moyen:
 			//TODO: Ces fonctions sont lentes
 			int triG = voisi.nb_triangles_G(g);
-			System.out.println("      Le Graph contient: "+triG+" triangles au total");
+			//System.out.println("      Le Graph contient: "+triG+" triangles au total");
 			int nv = voisi.get_nv(g);
-			System.out.println("      Le Graph contient: "+nv+" V");
+			//System.out.println("      Le Graph contient: "+nv+" V");
 			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluG);
 		}else {
