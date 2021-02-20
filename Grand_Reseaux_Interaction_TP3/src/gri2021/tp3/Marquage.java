@@ -42,4 +42,14 @@ public class Marquage {
 		}
 		return false;
 	}
+	
+	public int get_nb_sm() {
+		int x = 0;
+		for(int i = 0;i < marque.length;i++) {
+			if(marque[i]) {
+				x++;
+			}
+		}
+		return x;
+	}
 }

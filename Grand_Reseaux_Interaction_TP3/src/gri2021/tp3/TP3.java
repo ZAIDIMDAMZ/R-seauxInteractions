@@ -54,8 +54,38 @@ public class TP3 {
 		return file;
 	}
 	
+	//V1
+	/*
+	private static PriorityQueue<Paire> maj_queue(PriorityQueue<Paire> file, Marquage m) {
+		PriorityQueue<Paire> vu = file;//copie local
+		Paire x;
+		for(int i = 0;i<file.size();i++) {
+			x = vu.poll();
+			if(x.get_deg() != m.get_deg_marque(x.get_s())) {
+				//Pas d'autre moyen de mettre à la queu que de retirer et remettre les éléments modifiés...
+				file.remove(x);
+				file.add(new Paire(x.get_s(), m));
+			}
+		}
+		
+		return file;
+	}*/
+	
+
+	private static PriorityQueue<Paire> maj_queue(PriorityQueue<Paire> file, Marquage m) {
+		Paire x;
+		for(int i = 0;i<file.size();i++) {
+			//Pas d'autre moyen de mettre à jours la queu que de retirer et remettre les éléments modifiés...
+			x = file.poll();
+			file.add(x);
+		}
+		
+		return file;
+	}
+	
 	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123 ; triangles as20000102-simple.txt 12572 123
 	// clust test.txt 7 ; clust as-caida20071105-simple.txt 53381 ; clust as20000102-simple.txt 12572
+	// k-coeur test.txt 7 ; k-coeur as20000102-simple.txt 12572 ; k-coeur ca-AstroPh-simple.txt 198050
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -111,6 +141,7 @@ public class TP3 {
 			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluG);
 		}else if(action.compareTo("k-coeur")==0) {
+			mem();
 			Marquage monitor = new Marquage(g);
 			//Ce comparator indique l'ordre de comparaison à suivre
 			Comparator<Paire> compa = new Comparator<Paire>(){
@@ -125,24 +156,28 @@ public class TP3 {
 			PriorityQueue<Paire> file = new PriorityQueue<Paire>(g.nbS, compa);//Créer une Priority Queu de capacité initiale égale au nombre de sommet
 			file = initier_paires(g.nbS, file, monitor);
 			int k = 0;
-			int nbs_m=0;//Indique le nombre de sommets marqués pour la dernière valeur de k
-			Paire x;
+			int nb_sm= g.get_nbS();//Indique le nombre de sommets marqués pour la valeur actuelle de k
+			Paire x = file.poll();
 			while(k < g.nbS) {
-				x = file.poll();
-				if(x.get_deg() < k) {
+				//x = file.poll();
+				if(x == null) {break;}
+				System.out.println("x = ("+x.get_s()+", "+x.get_deg()+")  -> k = "+k);
+				if(x.get_deg() <= k) {
 					monitor.desactiver_S(x.get_s());//On désactive le sommet
-					nbs_m++;
+					//file = maj_queue(file, monitor);
+					x = file.poll();
 				}else {
 					//S'il ne reste plus de sommet marqué, on retourne
 					if(!monitor.reste_marque()) {
 						break;
 					}
 					k++;
-					nbs_m = 0;
+					nb_sm = monitor.get_nb_sm();
 				}
 			}
+			mem();
 			System.out.println(""+k);
-			System.out.println(""+nbs_m);
+			System.out.println(""+nb_sm);
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}
