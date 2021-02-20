@@ -1,6 +1,8 @@
 package gri2021.tp3;
 
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class TP3 {
 	
@@ -38,10 +40,18 @@ public class TP3 {
 	
 	//Indique si l'argument donné est connu ou non de l'exécution
 	private static boolean action_connue(String arg) {
-		if(arg.compareTo("triangles") == 0 || arg.compareTo("clust") == 0) {
+		if(arg.compareTo("triangles") == 0 || arg.compareTo("clust") == 0 || arg.compareTo("k-coeur") == 0) {
 			return true;
 		}
 		return false;
+	}
+	
+	private static PriorityQueue<Paire> initier_paires(int n, PriorityQueue<Paire> file, Marquage m) {
+		for(int i = 0;i<n;i++) {
+			file.add(new Paire(i, m));
+		}
+		
+		return file;
 	}
 	
 	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123 ; triangles as20000102-simple.txt 12572 123
@@ -100,6 +110,39 @@ public class TP3 {
 			//System.out.println("      Le Graph contient: "+nv+" V");
 			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluG);
+		}else if(action.compareTo("k-coeur")==0) {
+			Marquage monitor = new Marquage(g);
+			//Ce comparator indique l'ordre de comparaison à suivre
+			Comparator<Paire> compa = new Comparator<Paire>(){
+
+				@Override
+				public int compare(Paire o1, Paire o2) {
+					//Doit retourner un négatif, 0, ou un positif en fonction de si le 1er argument est plus élevé ou plus petit que le second
+					return (o1.get_deg() - o2.get_deg());
+				}
+				
+			};
+			PriorityQueue<Paire> file = new PriorityQueue<Paire>(g.nbS, compa);//Créer une Priority Queu de capacité initiale égale au nombre de sommet
+			file = initier_paires(g.nbS, file, monitor);
+			int k = 0;
+			int nbs_m=0;//Indique le nombre de sommets marqués pour la dernière valeur de k
+			Paire x;
+			while(k < g.nbS) {
+				x = file.poll();
+				if(x.get_deg() < k) {
+					monitor.desactiver_S(x.get_s());//On désactive le sommet
+					nbs_m++;
+				}else {
+					//S'il ne reste plus de sommet marqué, on retourne
+					if(!monitor.reste_marque()) {
+						break;
+					}
+					k++;
+					nbs_m = 0;
+				}
+			}
+			System.out.println(""+k);
+			System.out.println(""+nbs_m);
 		}else {
 			throw new Exception("L'action <<"+action+">> est inconnue du programme!");
 		}

@@ -28,4 +28,18 @@ public class Marquage {
 			throw new Exception("Le sommet"+ S+  "a déjà été désactivé");
 		}
 	}
+	
+	public int get_deg_marque(int x) {
+		return deg[x];
+	}
+	
+	//Indique s'il reste au moins un sommet marqué
+	public boolean reste_marque() {
+		for(int i = 0; i <marque.length; i++) {
+			if(marque[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
