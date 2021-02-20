@@ -54,25 +54,8 @@ public class TP3 {
 		return file;
 	}
 	
-	//V1
-	/*
-	private static PriorityQueue<Paire> maj_queue(PriorityQueue<Paire> file, Marquage m) {
-		PriorityQueue<Paire> vu = file;//copie local
-		Paire x;
-		for(int i = 0;i<file.size();i++) {
-			x = vu.poll();
-			if(x.get_deg() != m.get_deg_marque(x.get_s())) {
-				//Pas d'autre moyen de mettre à la queu que de retirer et remettre les éléments modifiés...
-				file.remove(x);
-				file.add(new Paire(x.get_s(), m));
-			}
-		}
-		
-		return file;
-	}*/
-	
-
-	private static PriorityQueue<Paire> maj_queue(PriorityQueue<Paire> file, Marquage m) {
+	//V2: Fonctionne mais est trop lente
+	/*private static PriorityQueue<Paire> maj_queue(PriorityQueue<Paire> file, Marquage m) {
 		Paire x;
 		for(int i = 0;i<file.size();i++) {
 			//Pas d'autre moyen de mettre à jours la queu que de retirer et remettre les éléments modifiés...
@@ -81,7 +64,7 @@ public class TP3 {
 		}
 		
 		return file;
-	}
+	}*/
 	
 	//triangles test.txt 7 1 ; triangles as-caida20071105-simple.txt 53381 123 ; triangles as20000102-simple.txt 12572 123
 	// clust test.txt 7 ; clust as-caida20071105-simple.txt 53381 ; clust as20000102-simple.txt 12572
@@ -141,7 +124,7 @@ public class TP3 {
 			double cluG = (double) (3 * triG)/(nv);
 			System.out.format("%.5f\n", cluG);
 		}else if(action.compareTo("k-coeur")==0) {
-			mem();
+			//mem();
 			Marquage monitor = new Marquage(g);
 			//Ce comparator indique l'ordre de comparaison à suivre
 			Comparator<Paire> compa = new Comparator<Paire>(){
@@ -161,10 +144,14 @@ public class TP3 {
 			while(k < g.nbS) {
 				//x = file.poll();
 				if(x == null) {break;}
-				System.out.println("x = ("+x.get_s()+", "+x.get_deg()+")  -> k = "+k);
+				//System.out.println("x = ("+x.get_s()+", "+x.get_deg()+")  -> k = "+k);
 				if(x.get_deg() <= k) {
-					monitor.desactiver_S(x.get_s());//On désactive le sommet
+					//V1:/*
+					//monitor.desactiver_S(x.get_s());//On désactive le sommet 
 					//file = maj_queue(file, monitor);
+					//V1*/
+					//V2: La file a tendance à avoir des dédoublement (sans conséquence sur le résultat) mais est plus optimal en temps
+					file = monitor.desactiver_S(x.get_s(),  file);//On met à jours
 					x = file.poll();
 				}else {
 					//S'il ne reste plus de sommet marqué, on retourne
@@ -175,7 +162,7 @@ public class TP3 {
 					nb_sm = monitor.get_nb_sm();
 				}
 			}
-			mem();
+			//mem();
 			System.out.println(""+k);
 			System.out.println(""+nb_sm);
 		}else {

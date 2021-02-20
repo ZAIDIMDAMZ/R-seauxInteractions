@@ -2,12 +2,12 @@ package gri2021.tp3;
 
 //Modelisation des paire (sommet,deg) pour le k-coeur
 public class Paire {
-	private int s/*, deg*/;
+	private int s, deg;
 	private Marquage monitor;//devra être lié à un monitor pour toujours avoir la valeur mise à jours de deg
 	Paire(int s, Marquage monitor){
 		this.s = s;
 		this.monitor = monitor;
-		//deg = monitor.get_deg_marque(s);
+		deg = monitor.get_deg_marque(s);
 	}
 	
 	public int get_s() {
@@ -19,6 +19,12 @@ public class Paire {
 		return monitor.get_deg_marque(s);
 		//return deg;
 	}
+	
+	//Retourne le degré initial?
+	public int get_ini() {
+		return deg;
+	}
+	
 	/*
 	public void maj_deg(int deg) {
 		this.deg = deg;
