@@ -29,11 +29,10 @@ public class Generateur {
 		return s;
 	}
 	
-	//Donne un tableau "d" des degré correspond à un ex de base (suceptible de changer):
-	public Generateur(int n, int[] d) {
-		this.E = new int[size_d(n, d)];
+	//Remplit le E avec les valeurs initiales
+	private void fill_E(int[] d) {
 		int k = 0;//La position relative d'une élément sur le tableau
-		for(int i = 0; i < n; i++) {
+		for(int i = 0; i < d.length; i++) {
 			int j = 0;
 			while(j < d[i]) {
 				E[k] = i;
@@ -41,6 +40,19 @@ public class Generateur {
 				j++;
 			}
 		}
+	}
+	
+	//Donner un tableau "d" des degré correspond à un ex de base (suceptible de changer):
+	public Generateur(int n, int[] d) {
+		this.E = new int[size_d(n, d)];
+		fill_E(d);
+		permutations();//On permute les valeurs de E pour finir la génération
+	}
+	
+	//Donner un tableau "d" des degré correspond à un ex de base (suceptible de changer):
+	public Generateur(Sequence_Degres sd) {
+		this.E = new int[sd.get_sum_d()];
+		fill_E(sd.get_d());
 		permutations();//On permute les valeurs de E pour finir la génération
 	}
 	
