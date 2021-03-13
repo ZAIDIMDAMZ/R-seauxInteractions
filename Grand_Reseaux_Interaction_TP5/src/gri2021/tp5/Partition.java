@@ -32,7 +32,7 @@ public class Partition {
 		modul = to_long(0);
 		for(int i = 0; i < commu.length;i++) {
 			//modul += ((to_long(4)*m)*(to_long(G.get_deg(i)))) - (to_long(2*G.get_deg(i))*(commu[i].getSC()+to_long(G.get_deg(i))));
-			modul += (to_long(2)*m) / (to_long(1) - commu[i].getSC());
+			modul += (to_long(2)*m) / (to_long(1) - (commu[i].getSC()^2));
 		}
 	}
 	
