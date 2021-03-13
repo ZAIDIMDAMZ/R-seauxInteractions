@@ -6,14 +6,11 @@ public class Partition {
 	int commu[];//Le num de commu associé à chaque sommet
 	int SC[];
 	long modul;//modularite
-	long m;
+	long m2;
 	Graph G;
 	
-	//J'avais mal compirs l'énoncé, cette opération ne convertie pas en long
-	/*public long to_long(int x) {
-		return (1L * x * x);
-	}*/
-	
+	//Je m'en servais avant mais je me rend compte que cela consome beaucoup plus que nécessaire alors qu'une boucle permetterait d'avoir les 2 valeur nécessaires
+	/*
 	public long get_dC(int x, int C) {
 		int dC = 0;
 		Iterator<Integer> ls_v = G.neighbors(x).iterator();
@@ -24,23 +21,37 @@ public class Partition {
 			}
 		}
 		return dC;
+	}*/
+	
+	public long maj_Q(int u, int B, int C, int degU, int duC, int duB) {
+		
+		
+		
+		return 2L*m2*(duC - duB) - (2L*degU* (SC[C] - SC[B] + degU));
 	}
 	
-	public long maj_Q(int u, int v, int B) {
-		//return ((to_long(4)*m)*(commu[u].get_dC(u) - commu[v].get_dC(v))) - (to_long(2*G.get_deg(u))* (commu[u].getSC() - commu[v].getSC() + to_long(G.get_deg(u))));
-		return (4*m)*(get_dC(u, commu[v]) - get_dC(v, B)) - (2*G.get_deg(u)* (SC[v] - SC[u] + G.get_deg(u)));
-	}
-	
-	//Deplacer u vers la communaute de v
-	public void deplace_to(int u, int v) {
-		/*commu[u].supp_s(u);
-		commu[v].add_s(u);*/
+	public void deplace(int u, int C) {
 		int B = commu[u];
-		commu[u] = commu[v];
-		modul += maj_Q(u,v,B);
-		SC[v] += SC[u];
-		SC[u] = SC[v];
+		
+		//cf correction: je me suis rendu compte qu'elle était plus obtimal car elle fait tout en une boucle
+		int degU = 0;
+		int duC = 0;
+		int duB = 0;
+		Iterator<Integer> ls_v = G.neighbors(u).iterator();
+		while(ls_v.hasNext()) {
+			int v = ls_v.next();
+			degU++;
+			if(commu[v] == C) {duC++;}
+			if(commu[v] == B) {duB++;}
+		}
+		modul += maj_Q(u,B,C,degU,duC,duB);
+
+		commu[u] = C;
+		//Cf correction: avant je mettais à jours les SC avec SC[u] et pas degU, cela générait de l'erreur à long terme...
+		SC[C] += degU;
+		SC[B] -= degU;
 	}
+
 	
 	Partition(Graph G){
 		this.G = G;
@@ -50,9 +61,7 @@ public class Partition {
 			commu[i] = i;//Chaque sommet commence dans sa propre communauté
 			SC[i] = G.get_deg(i);
 		}
-		m = G.get_nbA();
-		System.out.println("m = "+m);
-		//TODO calcul modularite initial
+		m2 = 2L * G.get_nbA();
 		modul = 0;
 		for(int i = 0; i < commu.length;i++) {
 			//modul += ((2*m)/G.get_deg(i)) - (SC[i]^2);//Tentative échouée
@@ -61,8 +70,10 @@ public class Partition {
 		}
 	}
 	
-	
 	public long get_modularite() {
 		return modul;
 	}
+	
+	public int get_commuOF(int x) {return commu[x];}
+	
 }
