@@ -25,9 +25,10 @@ public class Partition {
 	
 	public long maj_Q(int u, int B, int C, int degU, int duC, int duB) {
 		
+		long SC_C = SC[C];
+		long SC_B = SC[B];
 		
-		
-		return 2L*m2*(duC - duB) - (2L*degU* (SC[C] - SC[B] + degU));
+		return 2L*m2*(duC - duB) - (2L*degU* (SC_C - SC_B + degU));
 	}
 	
 	public void deplace(int u, int C) {
@@ -72,6 +73,25 @@ public class Partition {
 	
 	public long get_modularite() {
 		return modul;
+	}
+	
+	public void print_Q() {
+		System.err.println("modularite = "+modul);
+		long m2_carre = (1L * m2) * (1L * m2);
+		System.err.println("2m² = "+m2_carre);
+		
+		//J'ai essayé de faire afficher un long avec des virgule mais peu importe ce que j'essaye au final seul l'affichage d'une division avec des double fonctionne...
+		//long Q = (long) ((double) modul/m2_carre); //modul/(m2^2);
+		double Q = new Double(modul)/new Double(m2_carre);
+		//System.err.println("Q = "+Q);
+		System.out.format("%.5f\n", Q);
+	}
+	
+	public void execute_fichier_deplacements(Lecteur_Fichier deps, int nb) {
+		for(int i=0;i<nb;i++) {
+			//System.err.println("depalcer "+deps.get_depart_at(i)+" vers la communauté "+deps.get_arive_at(i));
+			deplace(deps.get_depart_at(i),deps.get_arive_at(i));//On effectue tout les déplacements demandés => arrive est n°communaute
+		}
 	}
 	
 	public int get_commuOF(int x) {return commu[x];}

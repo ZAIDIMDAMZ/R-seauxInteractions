@@ -5,14 +5,14 @@ public class TP5 {
 	
 	//Indique si l'argument donné est connu ou non de l'exécution
 	private static boolean action_connue(String arg) {
-		if(arg.compareTo("delta") == 0 || arg.compareTo("delta12321")==0) {
+		if(arg.compareTo("delta") == 0 || arg.compareTo("delta12321")==0 || arg.compareTo("deplacements")==0) {
 			return true;
 		}
 		return false;
 	}
 	
 	//delta clique3-ring4.txt 16 0 3
-	//
+	//delta12321 clique3-ring4.txt 16 1 3 4
 	public static void main(String[] args) throws Exception {
 		//Le fichier doit être lu avant de construire le graph
 		String action = args[0];
@@ -52,6 +52,13 @@ public class TP5 {
 			System.out.println(""+p.get_modularite());
 			p.deplace(v, v);
 			System.out.println(""+p.get_modularite());
+		}else if(action.compareTo("deplacements") == 0) {
+			String target = args[3];
+			int nb_d = Integer.parseInt(args[4]);
+			Lecteur_Fichier Deps = new Lecteur_Fichier(target, nb_d);//Contient les déplacements à effectuer
+			Deps.Read();
+			p.execute_fichier_deplacements(Deps, nb_d);
+			p.print_Q();
 		}else {
 			throw new Exception("Le programme a rencontré une action inconnue...");
 		}
